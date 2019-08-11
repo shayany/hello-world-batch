@@ -43,7 +43,7 @@ public class BatchHelloWorldApplication {
     }
 
     @Bean
-    public Job job() {
+    public Job job(){
         return this.jobBuilderFactory
                 .get("job")
                 .start(step())
