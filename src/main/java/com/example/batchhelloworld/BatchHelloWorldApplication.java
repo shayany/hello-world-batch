@@ -36,7 +36,11 @@ public class BatchHelloWorldApplication {
         return new Tasklet() {
             @Override
             public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
-                System.out.println("Hello, world!");
+                String name = (String) chunkContext
+                        .getStepContext()
+                        .getJobParameters()
+                        .get("name");
+                System.out.println(String.format("Hello, %s!",name));
                 return RepeatStatus.FINISHED;
             }
         };
