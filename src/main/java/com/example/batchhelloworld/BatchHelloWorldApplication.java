@@ -9,6 +9,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.CompositeJobParametersValidator;
 import org.springframework.batch.core.job.DefaultJobParametersValidator;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class BatchHelloWorldApplication {
         return this.jobBuilderFactory
                 .get("job")
                 .validator(compositeValidator())
+                .incrementer(new RunIdIncrementer())
                 .start(step())
                 .build();
     }
@@ -61,7 +63,7 @@ public class BatchHelloWorldApplication {
     public JobParametersValidator validator(){
         DefaultJobParametersValidator defaultJobParametersValidator = new DefaultJobParametersValidator();
         defaultJobParametersValidator.setRequiredKeys(new String[]{"fileName"});
-        defaultJobParametersValidator.setOptionalKeys(new String[]{"name"});
+        defaultJobParametersValidator.setOptionalKeys(new String[]{"name", "run.id"});
         return defaultJobParametersValidator;
     }
 
