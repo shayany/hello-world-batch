@@ -34,6 +34,7 @@ public class BatchHelloWorldApplication {
                 .get("basicJob")
                 .validator(compositeValidator())
                 .incrementer(new DailyJobTimestamper())
+                .listener(new JobLoggerListener())
                 .start(step())
                 .build();
     }
